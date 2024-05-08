@@ -10,7 +10,7 @@ Track a user's net supplied amount (per token) amount at the end of each hour.
 
 Install proper packages
 ```
-yarn global add @graphprotocol/graph-cli
+yarn install
 ```
 
 Build and codegen your subgraph

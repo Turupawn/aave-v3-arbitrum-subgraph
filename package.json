@@ -1,0 +1,10 @@
+{
+  "name": "aave-v3-arbitrum-subgraph",
+  "version": "1.0.0",
+  "description": "Aave V3 Arbitrum Subgraph tracking positional data",
+  "repository": "git@github.com:melotik/aave-v3-arbitrum-subgraph.git",
+  "author": "melotik",
+  "dependencies": {
+    "@graphprotocol/graph-cli": "^0.71.1"
+  }
+}

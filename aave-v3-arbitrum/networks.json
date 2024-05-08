@@ -1,0 +1,8 @@
+{
+  "arbitrum-one": {
+    "PoolConfigurator": {
+      "address": "0x8145eddDf43f50276641b55bd3AD95944510021E",
+      "startBlock": 7742433
+    }
+  }
+}
