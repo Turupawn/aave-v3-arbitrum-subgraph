@@ -6,6 +6,12 @@ Track a user's net supplied amount (per token) amount at the end of each hour.
 
 > Include positional interest accrued and transactions associated with each user position
 
+## Subgraph Location
+
+Deployment ID: `QmPb5YeU7C9vje3vUQpU52y1oAP8hfqeMMWRphi2nGPVsW`
+
+Query URL: https://api.studio.thegraph.com/query/22601/aave-v3-arbitrum/version/latest
+
 ## Build & Deploy
 
 Install proper packages

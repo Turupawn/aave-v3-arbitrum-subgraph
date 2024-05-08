@@ -1,10 +1,14 @@
 {
-  "name": "aave-v3-arbitrum-subgraph",
-  "version": "1.0.0",
-  "description": "Aave V3 Arbitrum Subgraph tracking positional data",
-  "repository": "git@github.com:melotik/aave-v3-arbitrum-subgraph.git",
+  "name": "aave-v3-arbitrum",
   "author": "melotik",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --studio aave-v3-arbitrum"
+  },
   "dependencies": {
-    "@graphprotocol/graph-cli": "^0.71.1"
-  }
+    "@graphprotocol/graph-cli": "0.68.3",
+    "@graphprotocol/graph-ts": "0.32.0"
+  },
+  "devDependencies": { "matchstick-as": "0.5.0" }
 }

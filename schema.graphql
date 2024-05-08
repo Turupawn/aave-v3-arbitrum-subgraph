@@ -1,0 +1,67 @@
+type Market @entity(immutable: true) {
+  " Smart contract address of the market "
+  id: Bytes!
+  name: String!
+  createdBlockNumber: BigInt!
+
+  " The token a user can supply/borrow in this market "
+  reserveToken: Token!
+
+  " Aave token minted/burned in this market to denote a position in the protocol "
+  aToken: Token!
+
+  " All positions in this market "
+  positions: [Position!]! @derivedFrom(field: "market")
+}
+
+type Token @entity(immutable: true) {
+  " Smart contract address of the token "
+  id: Bytes!
+  name: String!
+  symbol: String!
+  decimals: Int!
+}
+
+type Account @entity(immutable: true) {
+  " The address of the account "
+  id: Bytes!
+
+  " The positions the account has in the protocol "
+  positions: [Position!]! @derivedFrom(field: "account")
+
+}
+
+type Position @entity {
+  " {account.id}-{market.id} "
+  id: ID!
+
+  " Account that owns this position "
+  account: Account!
+
+  " The market in which this position was opened "
+  market: Market!
+
+  " Block number of when the position was opened "
+  blockNumberOpened: BigInt!
+
+  supplyBalance: BigInt!
+  debtBalance: BigInt!
+  netSupply: BigInt!
+
+  " Position daily snapshots for open positions "
+  snapshots: [PositionSnapshot!]! @derivedFrom(field: "position")
+}
+
+type PositionSnapshot @entity(immutable: true) {
+  " {position.id}-{blockNumber} "
+  id: ID!
+  blockNumber: BigInt!
+  timestamp: BigInt!
+
+  " Position that this snapshot is for "
+  position: Position!
+
+  supplyBalance: BigInt!
+  debtBalance: BigInt!
+  netSupply: BigInt!
+}
