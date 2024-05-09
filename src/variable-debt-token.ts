@@ -4,6 +4,7 @@ import { Burn, Mint } from "../generated/templates/VariableDebtToken/VariableDeb
 import { NEG_ONE_BI, RAY, getMarketIdFromDebtToken } from "./helpers/constants";
 import { createPositionSnapshot, getOrCreateAccount, getOrCreatePosition } from "./helpers/helpers";
 
+// handleMint adds debt to the position
 export function handleMint(event: Mint): void {
     const market = Market.load(getMarketIdFromDebtToken(event.address));
     if (!market) {
@@ -16,6 +17,7 @@ export function handleMint(event: Mint): void {
     updateDebtBalance(event, toAccount, market, scaledAmount, event.params.index);
 }
 
+// handleBurn removes debt from the position
 export function handleBurn(event: Burn): void {
     const market = Market.load(getMarketIdFromDebtToken(event.address));
     if (!market) {

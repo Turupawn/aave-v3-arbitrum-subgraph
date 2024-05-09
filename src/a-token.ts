@@ -5,6 +5,7 @@ import { createPositionSnapshot, getOrCreateAccount, getOrCreatePosition } from 
 import { NEG_ONE_BI, RAY } from "./helpers/constants"
 
 
+// hanldeBalanceTransfer sends aTokens from one account to another
 export function handleBalanceTransfer(event: BalanceTransfer): void {
     const market = Market.load(event.address);
     if (!market) {
@@ -19,6 +20,7 @@ export function handleBalanceTransfer(event: BalanceTransfer): void {
     updateSupplyBalance(event, toAccount, market, event.params.value, event.params.index);
 }
 
+// handleMint adds aTokens to the supply/position
 export function handleMint(event: Mint): void {
     const market = Market.load(event.address);
     if (!market) {
@@ -31,6 +33,7 @@ export function handleMint(event: Mint): void {
     updateSupplyBalance(event, account, market, scaledAmount, event.params.index);
 }
 
+// handleBurn removes aTokens from the supply/position
 export function handleBurn(event: Burn): void {
     const market = Market.load(event.address);
     if (!market) {

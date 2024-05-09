@@ -4,6 +4,7 @@ import { getOrCreateToken } from "./helpers/helpers";
 import { AToken as ATokenTemplate, VariableDebtToken as VariableDebtTokenTemplate } from "../generated/templates";
 import { ALLOWED_MARKETS } from "./helpers/constants";
 
+// handleReserveInitialized creates new markets
 export function handleReserveInitialized(event: ReserveInitialized): void {
   let market = Market.load(event.params.aToken);
   if (!market) {
