@@ -44,8 +44,25 @@ type Position @entity {
   " Block number of when the position was opened "
   blockNumberOpened: BigInt!
 
+  " The aToken balance of the position interest-normalized "
+  scaledSupply: BigInt!
+
+  " The interest index of the supply balance "
+  liquidityIndex: BigInt!
+
+  " Scaled supply * liquidity index "
   supplyBalance: BigInt!
+
+  " The debt balance of the position interest-normalized "
+  scaledDebtSupply: BigInt!
+
+  " The interest index of the debt balance "
+  variableDebtIndex: BigInt!
+
+  " Scaled debt * variable debt index "
   debtBalance: BigInt!
+
+  " Supply balance - debt balance "
   netSupply: BigInt!
 
   " Position daily snapshots for open positions "

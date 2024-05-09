@@ -16,7 +16,8 @@ dataSources:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - Upgraded
+        - Market
+        - Token
       abis:
         - name: PoolConfigurator
           file: ./abis/PoolConfigurator.json
@@ -37,12 +38,39 @@ templates:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      entities: []
+      entities:
+        - Position
+        - PositionSnapshot
       abis:
         - name: AToken
           file: ./abis/AToken.json
       eventHandlers:
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
+        - event: BalanceTransfer(indexed address,indexed address,uint256,uint256)
+          handler: handleBalanceTransfer
+        - event: Mint(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleMint
+        - event: Burn(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleBurn
+      file: ./src/a-token.ts
+  - kind: ethereum
+    name: VariableDebtToken
+    network: arbitrum-one
+    source:
+      abi: VariableDebtToken
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Position
+        - PositionSnapshot
+      abis:
+        - name: VariableDebtToken
+          file: ./abis/VariableDebtToken.json
+      eventHandlers:
+        - event: Mint(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleMint
+        - event: Burn(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleBurn
       file: ./src/a-token.ts
 

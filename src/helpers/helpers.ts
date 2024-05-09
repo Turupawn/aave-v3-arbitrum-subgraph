@@ -1,7 +1,7 @@
-import { Address, BigInt, Bytes } from "@graphprotocol/graph-ts";
-import { Account, Market, Position, Token } from "../../generated/schema";
+import { Address, BigInt, Bytes, ethereum } from "@graphprotocol/graph-ts";
+import { Account, Market, Position, PositionSnapshot, Token } from "../../generated/schema";
 import { ERC20 } from "../../generated/Pool/ERC20";
-import { ZERO_BI } from "./constants";
+import { RAY, ZERO_BI } from "./constants";
 
 export function getOrCreateToken(address: Bytes): Token {
   let token = Token.load(address);
@@ -38,11 +38,30 @@ export function getOrCreatePosition(account: Account, market: Market, blockNumbe
     position.account = account.id;
     position.market = market.id;
     position.blockNumberOpened = blockNumber;
+    position.scaledSupply = ZERO_BI;
+    position.liquidityIndex = RAY;
     position.supplyBalance = ZERO_BI;
+    position.scaledDebtSupply = ZERO_BI;
+    position.variableDebtIndex = RAY;
     position.debtBalance = ZERO_BI;
     position.netSupply = ZERO_BI;
     position.save();
   }
 
   return position;
+}
+
+export function createPositionSnapshot(position: Position, event: ethereum.Event): void {
+    let positionSnapshot = new PositionSnapshot(
+        position.id + "-" + event.block.number.toString()
+    );
+    positionSnapshot.blockNumber = event.block.number;
+    positionSnapshot.timestamp = event.block.timestamp;
+
+    positionSnapshot.position = position.id;
+
+    positionSnapshot.supplyBalance = position.supplyBalance;
+    positionSnapshot.debtBalance = position.debtBalance;
+    positionSnapshot.netSupply = position.netSupply;
+    positionSnapshot.save();
 }

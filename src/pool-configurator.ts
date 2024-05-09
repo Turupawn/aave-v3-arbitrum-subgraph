@@ -1,7 +1,8 @@
 import { ReserveInitialized } from "../generated/PoolConfigurator/PoolConfigurator"
 import { Market } from "../generated/schema"
 import { getOrCreateToken } from "./helpers/helpers";
-import { AToken as ATokenTemplate } from "../generated/templates";
+import { AToken as ATokenTemplate, VariableDebtToken as VariableDebtTokenTemplate } from "../generated/templates";
+import { ALLOWED_MARKETS } from "./helpers/constants";
 
 export function handleReserveInitialized(event: ReserveInitialized): void {
   let market = Market.load(event.params.aToken);
@@ -14,8 +15,11 @@ export function handleReserveInitialized(event: ReserveInitialized): void {
     market.createdBlockNumber = event.block.number;
     market.aToken = aToken.id;
     market.reserveToken = getOrCreateToken(event.params.aToken).id;
-    market.save();
   }
 
-  ATokenTemplate.create(event.params.aToken);
+  if (ALLOWED_MARKETS.includes(event.params.aToken)) {
+    market.save();
+    ATokenTemplate.create(event.params.aToken);
+    VariableDebtTokenTemplate.create(event.params.variableDebtToken);
+  }
 }
