@@ -2,7 +2,7 @@ import { BigInt, ethereum, log } from "@graphprotocol/graph-ts";
 import { Account, Market } from "../generated/schema";
 import { BalanceTransfer, Burn, Mint } from "../generated/templates/AToken/AToken"
 import { createPositionSnapshot, getOrCreateAccount, getOrCreatePosition } from "./helpers/helpers"
-import { NEG_ONE_BI, RAY } from "./helpers/constants"
+import { NEG_ONE_BI, rayDiv, rayMul } from "./helpers/constants"
 
 
 // hanldeBalanceTransfer sends aTokens from one account to another
@@ -29,7 +29,7 @@ export function handleMint(event: Mint): void {
     }
 
     const account = getOrCreateAccount(event.params.onBehalfOf);
-    const scaledAmount = event.params.value.div(event.params.index.div(RAY));
+    const scaledAmount = rayDiv(event.params.value, event.params.index);
     updateSupplyBalance(event, account, market, scaledAmount, event.params.index);
 }
 
@@ -42,7 +42,7 @@ export function handleBurn(event: Burn): void {
     }
 
     const account = getOrCreateAccount(event.params.from);
-    const scaledAmount = event.params.value.div(event.params.index.div(RAY)).times(NEG_ONE_BI);
+    const scaledAmount = rayDiv(event.params.value, event.params.index).times(NEG_ONE_BI);
     updateSupplyBalance(event, account, market, scaledAmount, event.params.index);
 }
 
@@ -51,7 +51,7 @@ function updateSupplyBalance(event: ethereum.Event, account: Account, market: Ma
 
     // update supply balance
     position.scaledSupply = position.scaledSupply.plus(scaledAmount);
-    position.supplyBalance = position.scaledSupply.times(index.div(RAY));
+    position.supplyBalance = rayMul(position.scaledSupply, index);
     position.liquidityIndex = index;
 
     position.netSupply = position.supplyBalance.minus(position.debtBalance);

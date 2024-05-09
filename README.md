@@ -12,6 +12,8 @@ Deployment ID: `QmZU1fWLhCuq3u3i7Sf9PU9QxyPPMYeAuH7dZsEfcQ8TNS`
 
 Query URL: https://api.studio.thegraph.com/query/22601/aave-v3-arbitrum/version/latest
 
+> NOTE: The subgraph with bug fixes is not syncing so we don't have updated (accurate) data
+
 ### Notes
 
 - Skipping stable debt token tracking since none of the markets we want have stable debt tokens

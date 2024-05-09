@@ -11,6 +11,16 @@ export const RAY = BigInt.fromString("10").pow(27);
 export const ZERO_BI = BigInt.fromI32(0);
 export const NEG_ONE_BI = BigInt.fromI32(-1);
 
+export function rayDiv(value: BigInt, index: BigInt): BigInt {
+    const index_bd = index.toBigDecimal().div(RAY.toBigDecimal());
+    return BigInt.fromString(value.toBigDecimal().div(index_bd).toString());
+}
+
+export function rayMul(value: BigInt, index: BigInt): BigInt {
+    const index_bd = index.toBigDecimal().div(RAY.toBigDecimal());
+    return BigInt.fromString(value.toBigDecimal().times(index_bd).toString());
+}
+
 // for simplicity, we will use the address of the debt token to identify the market
 export function getMarketIdFromDebtToken(address: Address): Bytes {
     // WETH
