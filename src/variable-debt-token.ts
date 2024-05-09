@@ -1,7 +1,7 @@
 import { BigInt, ethereum, log } from "@graphprotocol/graph-ts";
 import { Account, Market } from "../generated/schema";
 import { Burn, Mint } from "../generated/templates/VariableDebtToken/VariableDebtToken";
-import { RAY, getMarketIdFromDebtToken } from "./helpers/constants";
+import { NEG_ONE_BI, RAY, getMarketIdFromDebtToken } from "./helpers/constants";
 import { createPositionSnapshot, getOrCreateAccount, getOrCreatePosition } from "./helpers/helpers";
 
 export function handleMint(event: Mint): void {
@@ -12,7 +12,8 @@ export function handleMint(event: Mint): void {
     }
     
     const toAccount = getOrCreateAccount(event.params.onBehalfOf);
-    updateDebtBalance(event, toAccount, market, event.params.value, event.params.index);
+    const scaledAmount = event.params.value.div(event.params.index.div(RAY));
+    updateDebtBalance(event, toAccount, market, scaledAmount, event.params.index);
 }
 
 export function handleBurn(event: Burn): void {
@@ -23,7 +24,8 @@ export function handleBurn(event: Burn): void {
     }
     
     const toAccount = getOrCreateAccount(event.params.from);
-    updateDebtBalance(event, toAccount, market, event.params.value, event.params.index);
+    const scaledAmount = event.params.value.div(event.params.index.div(RAY)).times(NEG_ONE_BI);
+    updateDebtBalance(event, toAccount, market, scaledAmount, event.params.index);
 }
 
 function updateDebtBalance(event: ethereum.Event, account: Account, market: Market, scaledAmount: BigInt, index: BigInt): void {

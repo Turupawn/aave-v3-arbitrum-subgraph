@@ -9,6 +9,7 @@ export const ALLOWED_MARKETS = [
 
 export const RAY = BigInt.fromString("10").pow(27);
 export const ZERO_BI = BigInt.fromI32(0);
+export const NEG_ONE_BI = BigInt.fromI32(-1);
 
 // for simplicity, we will use the address of the debt token to identify the market
 export function getMarketIdFromDebtToken(address: Address): Bytes {

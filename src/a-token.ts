@@ -2,7 +2,7 @@ import { BigInt, ethereum, log } from "@graphprotocol/graph-ts";
 import { Account, Market } from "../generated/schema";
 import { BalanceTransfer, Burn, Mint } from "../generated/templates/AToken/AToken"
 import { createPositionSnapshot, getOrCreateAccount, getOrCreatePosition } from "./helpers/helpers"
-import { RAY } from "./helpers/constants"
+import { NEG_ONE_BI, RAY } from "./helpers/constants"
 
 
 export function handleBalanceTransfer(event: BalanceTransfer): void {
@@ -13,7 +13,7 @@ export function handleBalanceTransfer(event: BalanceTransfer): void {
     }
 
     const fromAccount = getOrCreateAccount(event.params.from);
-    updateSupplyBalance(event, fromAccount, market, event.params.value, event.params.index);
+    updateSupplyBalance(event, fromAccount, market, event.params.value.times(NEG_ONE_BI), event.params.index);
 
     const toAccount = getOrCreateAccount(event.params.to);
     updateSupplyBalance(event, toAccount, market, event.params.value, event.params.index);
@@ -39,7 +39,7 @@ export function handleBurn(event: Burn): void {
     }
 
     const account = getOrCreateAccount(event.params.from);
-    const scaledAmount = event.params.value.div(event.params.index.div(RAY)).times(BigInt.fromI32(-1));
+    const scaledAmount = event.params.value.div(event.params.index.div(RAY)).times(NEG_ONE_BI);
     updateSupplyBalance(event, account, market, scaledAmount, event.params.index);
 }
 
