@@ -8,7 +8,7 @@ dataSources:
     name: PoolConfigurator
     network: arbitrum-one
     source:
-      address: "0x8145eddDf43f50276641b55bd3AD95944510021E"
+      address: "0x32BCab42a2bb5AC577D24b425D46d8b8e0Df9b7f"
       abi: PoolConfigurator
       startBlock: 7742433
     mapping:

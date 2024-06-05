@@ -2,9 +2,9 @@ import { Address, BigInt, Bytes } from "@graphprotocol/graph-ts";
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 export const ALLOWED_MARKETS = [
-    Address.fromHexString('0xe50fa9b3c56ffb159cb0fca61f5c9d750e8128c8'), // aWETH
-    Address.fromHexString('0x6ab707aca953edaefbc4fd23ba73294241490620'), // aUSDT
-    Address.fromHexString('0x625e7708f30ca75bfd92586e17077590c60eb4cd') // aUSDC
+    Address.fromHexString('0xf301805bE1Df81102C957f6d4Ce29d2B8c056B2a'), // aWETH
+    //Address.fromHexString('0x6ab707aca953edaefbc4fd23ba73294241490620'), // aUSDT
+    Address.fromHexString('0x1D738a3436A8C49CefFbaB7fbF04B660fb528CbD') // aUSDC
 ]
 
 export const RAY = BigInt.fromString("10").pow(27);
@@ -24,18 +24,18 @@ export function rayMul(value: BigInt, index: BigInt): BigInt {
 // for simplicity, we will use the address of the debt token to identify the market
 export function getMarketIdFromDebtToken(address: Address): Bytes {
     // WETH
-    if (address == Address.fromHexString('0x0c84331e39d6658cd6e6b9ba04736cc4c4734351')) {
-        return Bytes.fromHexString('0xe50fa9b3c56ffb159cb0fca61f5c9d750e8128c8')
+    if (address == Address.fromHexString('0xfD7344CeB1Df9Cf238EcD667f4A6F99c6Ef44a56')) {
+        return Bytes.fromHexString('0xf301805bE1Df81102C957f6d4Ce29d2B8c056B2a')
     }
 
     // USDT
-    if (address == Address.fromHexString('0xfb00ac187a8eb5afae4eace434f493eb62672df7')) {
-        return Bytes.fromHexString('0x6ab707aca953edaefbc4fd23ba73294241490620')
-    }
+    //if (address == Address.fromHexString('0xfb00ac187a8eb5afae4eace434f493eb62672df7')) {
+    //    return Bytes.fromHexString('0x6ab707aca953edaefbc4fd23ba73294241490620')
+    //}
 
     // USDC
-    if (address == Address.fromHexString('0xf611aeb5013fd2c0511c9cd55c7dc5c1140741a6')) {
-        return Bytes.fromHexString('0x625e7708f30ca75bfd92586e17077590c60eb4cd')
+    if (address == Address.fromHexString('0x3d2E209af5BFa79297C88D6b57F89d792F6E28EE')) {
+        return Bytes.fromHexString('0x1D738a3436A8C49CefFbaB7fbF04B660fb528CbD')
     }
 
     return Bytes.fromHexString(ZERO_ADDRESS);

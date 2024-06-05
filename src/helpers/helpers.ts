@@ -1,13 +1,13 @@
 import { Address, BigInt, Bytes, ethereum } from "@graphprotocol/graph-ts";
 import { Account, Market, Position, PositionSnapshot, Token } from "../../generated/schema";
-import { ERC20 } from "../../generated/Pool/ERC20";
+import { AToken } from "../../generated/templates/AToken/AToken";
 import { RAY, ZERO_BI } from "./constants";
 
 export function getOrCreateToken(address: Bytes): Token {
   let token = Token.load(address);
 
   if (!token) {
-    const contract = ERC20.bind(Address.fromBytes(address));
+    const contract = AToken.bind(Address.fromBytes(address));
 
     token = new Token(address);
     token.symbol = contract.try_symbol() ? contract.symbol() : "Unknown";
